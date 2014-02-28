@@ -1,0 +1,10 @@
+name: BED-Com Talk
+pygments: true
+
+markdown: kramdown
+
+kramdown:
+  use_coderay: true
+
+  coderay:
+    coderay_line_numbers: nil
