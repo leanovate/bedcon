@@ -15,10 +15,8 @@ package scala.util.parsing.combinator
 trait Parsers {
     type Elem
 
-    type Input = Reader[Elem]
-
     trait Parser {
-        def apply(input: Input) : ParseResult[T]
+        def apply(input: Reader[Elem]) : ParseResult[T]
 
         ...
     }
@@ -31,7 +29,9 @@ trait Parsers {
 
     case class Failure(...) extends NoSuccess(...)
 
-    case class Error(...) extends NoSuccess(...)        
+    case class Error(...) extends NoSuccess(...)
+
+    ...
 }
 {% endhighlight %}
 
