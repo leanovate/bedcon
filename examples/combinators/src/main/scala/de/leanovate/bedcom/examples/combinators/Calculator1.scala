@@ -28,12 +28,3 @@ class Calculator1 extends Parsers {
     case NoSuccess(msg, remain) => throw new RuntimeException(s"Parse error $msg at ${remain.pos}")
   }
 }
-
-object Calculator1 extends App {
-  val calculator = new Calculator1
-
-  println(calculator.parse("42"))
-  println(calculator.parse("42+54"))
-  println(calculator.parse("42-54"))
-  println(calculator.parse("42+54-45"))
-}

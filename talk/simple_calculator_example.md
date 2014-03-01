@@ -15,13 +15,13 @@ class Calculator1 extends Parsers {
 
   def addition: Parser[Int] = number ~ '+' ~ number ^^ { case left ~ _ ~ right => left + right }
 
-  def subtraction : Parser[Int] = number ~ '-' ~ number ^^ { case left ~ _ ~ right => left - right }
+  def subtraction: Parser[Int] = number ~ '-' ~ number ^^ { case left ~ _ ~ right => left - right }
 
   def number: Parser[Int] = digit.+ ^^ { digits => digits.mkString("").toInt }
 
-  def digit: Parser[Char] = elem("digit", _.isDigit)
+  def digit: Parser[Char] = elem("digit", ch => ch.isDigit)
 
-  def parse(str: String) = expr(new CharSequenceReader(str)) match {
+  def parse(str: String):Int = expr(new CharSequenceReader(str)) match {
     case Success(result, remain) if remain.atEnd => result
     case Success(_, remain) => throw new RuntimeException(s"Unparsed input at ${remain.pos}")
     case NoSuccess(msg, remain) => throw new RuntimeException(s"Parse error $msg at ${remain.pos}")
@@ -105,3 +105,29 @@ but does not lead to the desired result:
 "42-54"     ---> -12
 "42-54+12"  ---> -24  i.e. the expression is actually evaluated as 42 - (54 + 12)
 ~~~
+
+Also, if the input is long enough (i.e. contains many '+' and '-' operations), the parser might break with a stack-overflow again, which makes it unusable in a production environment.
+
+# Support multiple operation and operator precedence
+
+The combinator framework offers various tools to handle the concatenation off operators efficiently, though somewhat different from the way in classical grammars. Instead of writing a set of recursive rules it is possible to express a chain of parsers separated by delimiters/operator and define how the results should be combined for each delimiter/operator.
+
+{% highlight scala %}
+class Calculator2 extends Parsers {
+  type Elem = Char
+
+  def expr = addSub
+
+  def addSub: Parser[Int] = mulDiv * (
+      '+' ^^^ { (left: Int, right: Int) => left + right} 
+    | '-' ^^^ { (left: Int, right: Int) => left - right} )
+
+  def mulDiv = number * (
+      '*' ^^^ { (left: Int, right: Int) => left * right } 
+    | '/' ^^^ { (left: Int, right: Int) => left / right } )
+
+  def number = digit.+ ^^ { digits => digits.mkString("").toInt }
+
+  def digit = elem("digit", _.isDigit)
+}
+{% endhighlight %}
