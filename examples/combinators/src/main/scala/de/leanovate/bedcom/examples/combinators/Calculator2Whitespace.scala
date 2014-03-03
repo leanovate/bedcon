@@ -22,7 +22,7 @@ class Calculator2Whitespace extends Parsers {
       (left: Int, right: Int) => left / right
     })
 
-  def number = whitespace.* ~> digit.+ <~ whitespace ^^ {
+  def number = whitespace.* ~> digit.+ <~ whitespace.* ^^ {
     digits => digits.mkString("").toInt
   }
 

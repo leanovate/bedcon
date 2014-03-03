@@ -15,7 +15,7 @@ class Calculator1Spec extends FlatSpec with ShouldMatchers {
     calculator.parse("321+123") should be(444)
   }
 
-  it should "parse simple subtrations" in {
+  it should "parse simple subtractions" in {
     calculator.parse("42-54") should be(-12)
     calculator.parse("23-12") should be(11)
   }

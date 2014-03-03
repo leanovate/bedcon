@@ -35,12 +35,14 @@ trait Parsers {
 }
 {% endhighlight %}
 
-Usually: For lexical analyzers Parsers.Elem = Char and ParseResult[Token], whereas for the actual parser Parsers.Elem = Token and ParseResult[ASTNode].
+For simple parsers it usually suffices to use Parsers.Elem = Char. Though it is also possible to use the combinator framework in a more classic a approach by implementing a lexical analyzer with Parsers.Elem = Char and ParseResult[Token] beneath a syntactical parser with Parsers.Elem = Token and ParseResult[ASTNode].
 
-As a starting point the package already contains pre-defined base classes that support Java-like languages:
+As a starting point the framework already contains pre-defined base classes that support Java-like languages:
 
 * scala.util.parsing.combinator.syntactical.StdTokenParsers which is using
   * scala.util.parsing.combinator.lexical.StdLexical as lexer which is producing tokens defined in
   * scala.util.parsing.combinator.token.StdToken
+
+This should be discussed in more detail with the classic [Calculator example](scala_calculator_example.html).
 
 Unluckily these classes do not contain a feasible pattern for different lexer modes, which important to parser PHP: [Missing lexer modes](missing_lexer_modes.html)

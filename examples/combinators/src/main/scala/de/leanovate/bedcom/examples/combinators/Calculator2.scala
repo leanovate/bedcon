@@ -22,7 +22,6 @@ class Calculator2 extends Parsers {
       (left: Int, right: Int) => left / right
     })
 
-
   def number = digit.+ ^^ {
     digits => digits.mkString("").toInt
   }
@@ -34,13 +33,4 @@ class Calculator2 extends Parsers {
     case Success(_, remain) => throw new RuntimeException(s"Unparsed input at ${remain.pos}")
     case NoSuccess(msg, remain) => throw new RuntimeException(s"Parse error $msg at ${remain.pos}")
   }
-}
-
-object Calculator2 extends App {
-  val calculator = new Calculator2
-
-  println(calculator.parse("42"))
-  println(calculator.parse("42+54"))
-  println(calculator.parse("42-54"))
-  println(calculator.parse("42-3*3*3*2+24/2"))
 }
