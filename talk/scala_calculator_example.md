@@ -209,5 +209,46 @@ As one can see the grammar is almost unchanged while there is now support for wh
 ""2 * (3 /* blah blah */ +4) / 2 + 7 * 5"" ---> 42
 ~~~
 
-From this point on it becomes somewhat straight forward to extends this simple example by several other operators, support for functions or even to a full fledged programming language in itself. As an introduction to the combinator framework there is no need to stretch this any further than this.
+From this point on it becomes somewhat straight forward to extends this simple example by several other operators, support for functions or even to a full fledged programming language in itself.
+
+# Final step: Packrat parsing
+
+Once the grammar becomes more complicate or if there a many `|` or even `|||` rules, the overall performance of the parser might become an issue. In most cases this can be resolved by converting the parser to a packrat parser. Packrat parsing is a comparably new parsing algorithm that addresses the backtrack or look-ahead problem of traditional parsers. A packrat parser offers linear time parsing with a trade-off in the memory footprint, which should not be an issue in most cases though.
+
+The algorithm itself is explained in detain in the [original paper](http://bford.info/pub/lang/packrat-icfp02/) on 2002. Scala combinators already contain an out of the box implementation and an easy paradigm to convert most parsers to a packrat parser:
+
+* The parser should add the `PackratParsers` trait
+* All rules defined as `def` should become `lazy val`
+* Instead of returning `Parser[T]` the rules should return `PackratParser[T]`
+* The input has be wrapped by a `PackratReader[Elem]`
+
+{% highlight scala %}
+class Calculator4 extends StdTokenParsers with PackratParsers {
+  override type Tokens = StdLexical
+
+  override val lexical = new StdLexical
+
+  lexical.delimiters ++= List("(", ")", "+", "-", "*", "/")
+
+  lazy val expr: PackratParser[Int] = addSub
+
+  lazy val addSub: PackratParser[Int] = mulDiv * (
+      "+" ^^^ { (left: Int, right: Int) => left + right } 
+    | "-" ^^^ { (left: Int, right: Int) => left - right } )
+
+  lazy val mulDiv: PackratParser[Int] = term * (
+      "*" ^^^ { (left: Int, right: Int) => left * right } 
+    | "/" ^^^ { (left: Int, right: Int) => left / right } )
+
+  lazy val term: PackratParser[Int] = "(" ~> expr <~ ")" | numericLit ^^ (_.toInt)
+
+  def parse(str: String) = expr(new PackratReader(new lexical.Scanner(str))) match {
+    case Success(result, remain) if remain.atEnd => result
+    case Success(_, remain) => throw new RuntimeException(s"Unparsed input at ${remain.pos}")
+    case NoSuccess(msg, remain) => throw new RuntimeException(s"Parse error $msg at ${remain.pos}")
+  }
+}
+{% endhighlight %}
+
+Of course this is just for demonstration purposes only. This particular grammar is far to simple to have any kind of performance issues and packrat parsing is even counter productive.
 

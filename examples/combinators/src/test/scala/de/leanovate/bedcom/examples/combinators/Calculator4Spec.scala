@@ -1,9 +1,9 @@
 package de.leanovate.bedcom.examples.combinators
 
-import org.scalatest._
+import org.scalatest.{ShouldMatchers, FlatSpec}
 
-class Calculator3Spec extends FlatSpec with ShouldMatchers {
-  val calculator = new Calculator3
+class Calculator4Spec extends FlatSpec with ShouldMatchers {
+  val calculator = new Calculator4
 
   it should "parse numbers" in {
     calculator.parse("42") should be(42)
@@ -47,4 +47,5 @@ class Calculator3Spec extends FlatSpec with ShouldMatchers {
     calculator.parse("2 * (3+4) / 2 + 7 * 5") should be(42)
     calculator.parse("2 * (3 /* blah blah */ +4) / 2 + 7 * 5") should be(42)
   }
+
 }

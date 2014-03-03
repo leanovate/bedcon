@@ -16,7 +16,7 @@ breadcrumb: []
   * [Java parser generators](talk/java_parser_generators.html)
   * [Scala combinators](talk/scala_combinators.html)
     * [Simple calculator example](talk/scala_calculator_example.html)
-    * [Missing lexer modes]()
+    * [Missing lexer modes](talk/missing_lexer_modes.html)
   * [Comparison between flex/bison and Scala combinators]()
     * [Performance comparison]()
 * [The abstract syntax tree (AST)]()
