@@ -17,7 +17,7 @@ breadcrumb: []
   * [Scala combinators](talk/scala_combinators.html)
     * [Simple calculator example](talk/scala_calculator_example.html)
     * [Missing lexer modes](talk/missing_lexer_modes.html)
-  * [Comparison between flex/bison and Scala combinators]()
+  * [Comparison: flex/bison vs Scala combinators](talk/comparison_classic_scala.html)
     * [Performance comparison]()
 * [The abstract syntax tree (AST)]()
   * [Basic overview of abstract syntax trees]()

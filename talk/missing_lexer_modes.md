@@ -36,6 +36,8 @@ Combining all there to a single rule set might be possible, but wont be pretty.
 
 # Lexer modes with scala combinators
 
+The extension of the `StdTokenParsers` to a lexical analyzer with lexer mode support is pretty straight forward. First we define some very simple traits.
+
 {% highlight scala %}
 trait LexerMode {
   def newLexer(): Lexer
@@ -49,6 +51,10 @@ trait Lexer extends Parsers {
   val whitespace: Parser[Any] = success(Unit)
 }
 {% endhighlight %}
+
+The idea is that a `LexerMode` serves as factory for a `Lexer`, whereas a `Lexer` defines a `token` parser and a `whitespace` parser. All input consumed by the `whitespace` parse is supposed to be ignored, by default the `whitespace` parser yields an immediate success without consuming anything. The `token` parser is the actual lexical analyzer the produces a `Token` and an optional `LexerMode` if a mode-switch is necessary.
+
+The main magic happens in the implementation of the `Reader[Token]`, that is used as input for the syntactical parser. At its core the implementation looks like this:
 
 {% highlight scala %}
 class TokenReader(in: Reader[Char], lexer: Lexer) extends Reader[Token] {

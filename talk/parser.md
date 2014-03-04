@@ -10,3 +10,4 @@ breadcrumb: [index.md]
 * [Scala combinators](scala_combinators.html)
   * [Simple calculator example](scala_calculator_example.html)
   * [Missing lexer modes](missing_lexer_modes.html)
+* [Comparison: flex/bison vs Scala combinators](comparison_classic_scala.html)
