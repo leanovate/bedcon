@@ -36,3 +36,40 @@ Combining all there to a single rule set might be possible, but wont be pretty.
 
 # Lexer modes with scala combinators
 
+{% highlight scala %}
+trait LexerMode {
+  def newLexer(): Lexer
+}
+
+trait Lexer extends Parsers {
+  type Elem = Char
+
+  def token: Parser[(Token, Option[LexerMode])]
+
+  val whitespace: Parser[Any] = success(Unit)
+}
+{% endhighlight %}
+
+{% highlight scala %}
+class TokenReader(in: Reader[Char], lexer: Lexer) extends Reader[Token] {
+
+  import lexer.{Success, NoSuccess, token, whitespace}
+
+  def this(in: String, lexer: Lexer) = this(new CharArrayReader(in.toCharArray), lexer)
+
+  private val (tok: Token, mode: Option[LexerMode], rest1: Reader[Char], rest2: Reader[Char]) = whitespace(in) match {
+    case Success(_, in1) =>
+      token(in1) match {
+        case Success((token, m), in2) => (token, m, in1, in2)
+        case ns: NoSuccess => (errorToken(ns.msg), None, ns.next, skip(ns.next))
+      }
+    case ns: NoSuccess => (errorToken(ns.msg), None, ns.next, skip(ns.next))
+  }
+
+  def first = tok
+
+  def rest = new TokenReader(rest2, mode.map(_.newLexer()).getOrElse(lexer))
+
+  ...
+}
+{% endhighlight %}

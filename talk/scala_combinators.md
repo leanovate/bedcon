@@ -35,6 +35,21 @@ trait Parsers {
 }
 {% endhighlight %}
 
+{% highlight scala %}
+abstract class Reader[+T] {
+  def first: T
+
+  def rest: Reader[T]
+
+  def pos: Position
+
+  def atEnd: Boolean
+
+  ...  
+}
+{% endhighlight %}
+
+
 For simple parsers it usually suffices to use Parsers.Elem = Char. Though it is also possible to use the combinator framework in a more classic a approach by implementing a lexical analyzer with Parsers.Elem = Char and ParseResult[Token] beneath a syntactical parser with Parsers.Elem = Token and ParseResult[ASTNode].
 
 As a starting point the framework already contains pre-defined base classes that support Java-like languages:
