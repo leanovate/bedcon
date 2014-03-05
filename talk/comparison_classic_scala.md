@@ -62,23 +62,18 @@ def processIdent(name: String) =
       Identifier(name)
 ...
 '(' ~> tabsOrSpaces ~> (str("int") | str("integer")) 
-    <~ tabsOrSpaces <~ ')' ^^ {
-      s => IntegerCast(s) } 
+    <~ tabsOrSpaces <~ ')' ^^ IntegerCast
 | '(' ~> tabsOrSpaces ~> (str("real") | str("double")
-        | str("float")) <~ tabsOrSpaces <~ ')' ^^ {
-      s => DoubleCast(s) }
+ | str("float")) <~ tabsOrSpaces <~ ')' ^^ DoubleCast
 | '(' ~> tabsOrSpaces ~> (str("string") | 
-         str("binary")) <~ tabsOrSpaces <~ ')' ^^ {
-      s => StringCast(s) } 
+  str("binary")) <~ tabsOrSpaces <~ ')' ^^ StringCast
 | '(' ~> tabsOrSpaces ~> str("array") 
-    <~ tabsOrSpaces <~ ')' ^^ {
-      s => ArrayCast(s) } 
-| '(' ~> tabsOrSpaces ~> str("bool") 
-    <~ opt(str("ean")) <~ tabsOrSpaces <~ ')' ^^ {
-      s => BooleanCast(s) } 
+    <~ tabsOrSpaces <~ ')' ^^ ArrayCast 
+| '(' ~> tabsOrSpaces ~> str("bool") <~ 
+  opt(str("ean")) <~ tabsOrSpaces <~ ')' ^^ 
+    BooleanCast 
 | '(' ~> tabsOrSpaces ~> str("unset") 
-    <~ tabsOrSpaces <~ ')' ^^ {
-      s => UnsetCast(s) }
+    <~ tabsOrSpaces <~ ')' ^^ UnsetCast
 ...
 }
 {% endhighlight %}
@@ -195,5 +190,5 @@ The technologies are vastly different, nevertheless one can do line counting:
 |       | PHP bison  | JBJ scala combinators     |
 |------------------------------------------------|
 | Files | 1          | 1                         | 
-| Lines | 1283       | 847                       | 
+| Lines | 1283       | 714                       | 
 |------------------------------------------------|
