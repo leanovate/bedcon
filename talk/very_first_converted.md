@@ -1,14 +1,14 @@
 ---
 layout: page
-title: "Very first transcoded PHP"
+title: "Very first converted PHP"
 description: ""
-breadcrumb: [index.md]
+breadcrumb: [index.md, talk/converter.md]
 ---
 
 {% highlight php %}
 This is before
 <?php
-  print "Hello" . " world";
+    print "Hello" . " " . "world";
 ?>
 This is after
 {% endhighlight %}
@@ -27,7 +27,7 @@ object hello_world extends JbjCodeUnit {
     ctx.out.print("""This is before
        |""".stripMargin)
     ctx.out.print("")
-    ctx.out.print((StringVal("""Hello""") __ StringVal(""" world""")).toOutput)
+    ctx.out.print(((StringVal("""Hello""") !! StringVal(""" """)) !! StringVal("""world""")).toOutput)
     ctx.out.print("""This is after
        |""".stripMargin)
   }
