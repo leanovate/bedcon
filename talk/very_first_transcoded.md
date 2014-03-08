@@ -8,7 +8,7 @@ breadcrumb: [index.md]
 {% highlight php %}
 This is before
 <?php
-  print "Hello world";
+  print "Hello" . " world";
 ?>
 This is after
 {% endhighlight %}
@@ -17,6 +17,7 @@ This is after
 package testunits
 
 import de.leanovate.jbj.runtime.context.Context
+import de.leanovate.jbj.runtime.value._
 import de.leanovate.jbj.runtime.JbjCodeUnit
 
 object hello_world extends JbjCodeUnit {
@@ -26,7 +27,7 @@ object hello_world extends JbjCodeUnit {
     ctx.out.print("""This is before
        |""".stripMargin)
     ctx.out.print("")
-    ctx.out.print("""Hello world""")
+    ctx.out.print((StringVal("""Hello""") __ StringVal(""" world""")).toOutput)
     ctx.out.print("""This is after
        |""".stripMargin)
   }
