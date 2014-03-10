@@ -20,7 +20,7 @@ breadcrumb: []
   * [Comparison: flex/bison vs Scala combinators](talk/comparison_classic_scala.html)
 * [The abstract syntax tree (AST)](talk/abstract_syntax_tree.html)
 * [Common runtime library](talk/runtime_library.html)
-  * [Generate glue code with Scala marcos]()
+  * [Generate glue code with Scala marcos](talk/generate_glue_code.html)
 * [Convert PHP code](talk/converter.html)
   * [Very first converted PHP](talk/very_first_converted.html)
 * [Open issues]()

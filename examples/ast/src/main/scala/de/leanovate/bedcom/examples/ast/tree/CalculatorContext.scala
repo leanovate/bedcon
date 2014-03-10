@@ -7,8 +7,5 @@ class CalculatorContext {
 
   def getVariable(name: String): Option[Int] = variables.get(name)
 
-  def setVariable(name: String, value: Int) {
-
-    variables.put(name, value)
-  }
+  def setVariable(name: String, value: Int) = variables.put(name, value)
 }
