@@ -3,6 +3,8 @@ pygments: true
 
 markdown: kramdown
 
+exclude: ['examples']
+
 kramdown:
   use_coderay: true
 
