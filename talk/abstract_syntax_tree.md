@@ -25,7 +25,7 @@ The nodes of this AST break down like this:
 
 Returning to the previous calculator example, one might define a simple AST structure like this
 
-{% highlight scala %}
+{% highlight scala linenos %}
 trait Node { }
 
 trait Expr extends Node { }
@@ -47,7 +47,7 @@ case class AssignExpr(name: String, expr: Expr) extends Expr
 
 The parser for this now becomes a beauty of simplicity - at least once one can read the combinator syntax fluently.
 
-{% highlight scala %}
+{% highlight scala linenos %}
 object ASTParser extends StdTokenParsers {
   override type Tokens = StdLexical
 
@@ -77,7 +77,7 @@ It should be pointed out, that tools like AntLR are able to generate all this - 
 
 Once one has an AST, interpretation becomes straight forward. First one needs some form of execution context, in this case just a place where to store and retrieve arbitrary variables:
 
-{% highlight scala %}
+{% highlight scala linenos %}
 class CalculatorContext {
   private val variables = mutable.Map.empty[String, Int]
 
@@ -89,7 +89,7 @@ class CalculatorContext {
 
 Next one just has to add an evaluation method to the `Expr` nodes to produce a result for a given context
 
-{% highlight scala %}
+{% highlight scala linenos %}
 trait Expr extends Node {
   def eval(implicit context: CalculatorContext): Int
 }
@@ -97,7 +97,7 @@ trait Expr extends Node {
 
 ... and implement it for there concrete nodes, which might be a one-liner in most cases
 
-{% highlight scala %}
+{% highlight scala linenos %}
 case class AddExpr(left: Expr, right: Expr) extends Expr {
   override def eval(implicit context: CalculatorContext) = left.eval + right.eval
 }
@@ -132,7 +132,7 @@ It might seem that creating an AST for PHP is straight forward as well. While th
 * First of all the example above works so nicely, because the structure of the parser and the AST are a perfect match for each other. While it is certainly possible to generate a generic AST from the original bison grammar of PHP, this would not be very "nice" for interpretation or conversion. There are several examples of parser rules that have to be combined to a single AST node, while some rules should produce several nodes.
 * Some runtime aspects of PHP do not fit well to the classic interpreter approach demonstrated in this example, e.g.
 
-{% highlight php %}
+{% highlight php linenos %}
 <?php
 $a = 10;
 echo "First: $a\n";

@@ -9,7 +9,7 @@ Scala combinators are part of the scala-library (scala.util.parsing.combinator) 
 
 Very simplistic overview of the interface
 
-{% highlight scala %}
+{% highlight scala linenos %}
 package scala.util.parsing.combinator
 
 trait Parsers {
@@ -35,7 +35,7 @@ trait Parsers {
 }
 {% endhighlight %}
 
-{% highlight scala %}
+{% highlight scala linenos %}
 abstract class Reader[+T] {
   def first: T
 

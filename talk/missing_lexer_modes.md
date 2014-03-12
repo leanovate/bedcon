@@ -38,7 +38,7 @@ Combining all there to a single rule set might be possible, but wont be pretty.
 
 The extension of the `StdTokenParsers` to a lexical analyzer with lexer mode support is pretty straight forward. First we define some very simple traits.
 
-{% highlight scala %}
+{% highlight scala linenos %}
 trait LexerMode {
   def newLexer(): Lexer
 }
@@ -56,7 +56,7 @@ The idea is that a `LexerMode` serves as factory for a `Lexer`, whereas a `Lexer
 
 The main magic happens in the implementation of the `Reader[Token]`, that is used as input for the syntactical parser. At its core the implementation looks like this:
 
-{% highlight scala %}
+{% highlight scala linenos %}
 class TokenReader(in: Reader[Char], lexer: Lexer) extends Reader[Token] {
 
   import lexer.{Success, NoSuccess, token, whitespace}

@@ -5,7 +5,7 @@ description: ""
 breadcrumb: [index.md, talk/converter.md]
 ---
 
-{% highlight php %}
+{% highlight php linenos %}
 This is before
 <?php
     print "Hello" . " " . "world";
@@ -13,7 +13,7 @@ This is before
 This is after
 {% endhighlight %}
 
-{% highlight scala %}
+{% highlight scala linenos %}
 package testunits
 
 import de.leanovate.jbj.runtime.context.Context

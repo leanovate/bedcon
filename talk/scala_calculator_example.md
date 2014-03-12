@@ -7,7 +7,7 @@ breadcrumb: [index.md, talk/parser.md, talk/scala_combinators.md]
 
 # Very first step: Simple addition/substraction
 
-{% highlight scala %}
+{% highlight scala linenos %}
 class Calculator1 extends Parsers {
   type Elem = Char
 
@@ -51,7 +51,7 @@ In depth description of the combinations used in this example:
 
 On the very first try one might accidentally ein write the "expr" combinator in a different order:
 
-{% highlight scala %}
+{% highlight scala linenos %}
 ...
   def expr: Parser[Int] = number | addition | subtraction
 ...
@@ -70,7 +70,7 @@ If parsers are combined by the '|' operator, the first parser in the list with a
 
 As an alternative the combinator framework offers the '|||' operator, in which case all the parser the successfully consumed the most input wins (longest match combination), so the original behavior can be also achieved by:
 
-{% highlight scala %}
+{% highlight scala linenos %}
 ...
   def expr: Parser[Int] = number ||| addition ||| subtraction
 ...
@@ -82,7 +82,7 @@ The problem with this is, that each time all combined parsers have to be evaluat
 
 To support longer expression on is inclined to "fix" the addition and subtraction rule like this:
 
-{% highlight scala %}
+{% highlight scala linenos %}
 ...
   def expr: Parser[Int] = addition | subtraction | number
 
@@ -96,7 +96,7 @@ When doing so the parser will break with a stack-overflow. Actually this is quit
 
 The stack-overflow can be avoided, when "fixing" the rules like this
 
-{% highlight scala %}
+{% highlight scala linenos %}
 ...
   def expr: Parser[Int] = addition | subtraction | number
 
@@ -121,7 +121,7 @@ Also, if the input is long enough (i.e. contains many '+' and '-' operations), t
 
 The combinator framework offers various tools to handle the concatenation off operators efficiently, though somewhat different from the way in classical grammars. Instead of writing a set of recursive rules it is possible to express a chain of parsers separated by delimiters/operator and define how the results should be combined for each delimiter/operator.
 
-{% highlight scala %}
+{% highlight scala linenos %}
 class Calculator2 extends Parsers {
   type Elem = Char
 
@@ -155,7 +155,7 @@ Which already honor the precedence of '*' and '/' over '+' and '-', i.e. it alre
 
 Even though the previous example already works quite well, it has no support for whitespace yet. I.e. "42" works perfectly well, while "  42  " already breaks. To fix this one might be inclined to simple extend the `number` parser like this:
 
-{% highlight scala %}
+{% highlight scala linenos %}
 ...
   def number = whitespace.* ~> digit.+ <~ whitespace.* ^^ { digits => digits.mkString("").toInt }
 
@@ -174,7 +174,7 @@ Event though this fixes the whitespace problem and might work for a simple examp
 
 To prevent a pollution of the grammar it is usually a good idea to split the parser into a lexical analyzer and a syntactic parser, just like one would do with lex/flex and yacc/bison in the classic world. To support this, the combinator framework already contains a lexical analyzer that might be used out of the box in many cases:
 
-{% highlight scala %}
+{% highlight scala linenos %}
 class Calculator3 extends StdTokenParsers {
   override type Tokens = StdLexical
 
@@ -222,7 +222,7 @@ The algorithm itself is explained in detain in the [original paper](http://bford
 * Instead of returning `Parser[T]` the rules should return `PackratParser[T]`
 * The input has be wrapped by a `PackratReader[Elem]`
 
-{% highlight scala %}
+{% highlight scala linenos %}
 class Calculator4 extends StdTokenParsers with PackratParsers {
   override type Tokens = StdLexical
 

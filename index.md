@@ -21,6 +21,8 @@ breadcrumb: []
 * [The abstract syntax tree (AST)](talk/abstract_syntax_tree.html)
 * [Common runtime library](talk/runtime_library.html)
   * [Generate glue code with Scala marcos](talk/generate_glue_code.html)
+    * [Scala macros: Getting started](talk/scala_macros.html)
+    * [Scala macros: Calculator example](talk/scala_macros_calculator.html)
 * [Convert PHP code](talk/converter.html)
   * [Very first converted PHP](talk/very_first_converted.html)
 * [Open issues]()

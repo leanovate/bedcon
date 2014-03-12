@@ -49,7 +49,7 @@ Actually a side-by-side comparison of flex and a lexer based one scala combinato
 </div>
 
 <div class="col-xs-6">
-{% highlight scala %}
+{% highlight scala linenos %}
 case class ScriptLexer(mode: ScriptingLexerMode) 
                 extends Lexer {
 ...
@@ -131,7 +131,7 @@ foreach_statement:
 </div>
 
 <div class="col-xs-6">
-{% highlight scala %}
+{% highlight scala linenos %}
 class JbjParser extends Parsers with PackratParsers {
 ...
 lazy val interfaceExtendsList = 

@@ -96,7 +96,7 @@ Apart from some specialties one might think that these are not so far away from 
 
 PHP has a C++ like syntax for passing parameters by reference
 
-{% highlight php %}
+{% highlight php linenos %}
 <?php
 
 function squareIt(&$x) {
@@ -119,7 +119,7 @@ PHP has a Java like syntax to define classes and interfaces. With PHP 5.4 this h
 
 But: Unlike Java PHP classes support a destructor, even though there is no "delete" like in C++. Instead the destructor is called immediately once the last reference to an instance is unset.
 
-{% highlight php %}
+{% highlight php linenos %}
 <?php
 
 class A {
@@ -152,7 +152,7 @@ end
 
 PHP has a C++ like syntax to define namespaces
 
-{% highlight php %}
+{% highlight php linenos %}
 <?php
 namespace N1 {
     function a() {
@@ -179,7 +179,7 @@ In a
 
 As of PHP 5.3 there is a javascript like support for anonymous functions aka closures.
 
-{% highlight php %}
+{% highlight php linenos %}
 <?php
 $func = function($x) {
     print "$x\n";
@@ -196,7 +196,7 @@ Hello
 
 As of PHP 5.5 there is a python like support for generators.
 
-{% highlight php %}
+{% highlight php linenos %}
 <?php
 function generateNums() {
     for ( $i = 1; $i < 5; $i++ ) {
@@ -205,23 +205,23 @@ function generateNums() {
 };
 $generator = generateNums(); // this is a Generator class implementing the Iterator interface
 foreach ($generator as $value) {
-    print "$value\n";
+    print "Value: $value\n";
 }
 ?>
 {% endhighlight %}
 
 ~~~
-1
-2
-3
-4
+Value: 1
+Value: 2
+Value: 3
+Value: 4
 ~~~
 
 ## Inline HTML
 
 PHP was originally designed to be embedded inside regular HTML.
 
-{% highlight php %}
+{% highlight php linenos %}
 <html>
 <head></head>
 <body>
@@ -257,7 +257,7 @@ The modern PHP interpreter is now based on the Zend engine. At its core it consi
 
 Example:
 
-{% highlight php %}
+{% highlight php linenos %}
 <?php
 
 $obj = new A();

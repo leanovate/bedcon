@@ -19,7 +19,7 @@ Regular scala functions and PHP functions do not fit well which each other:
 
 At the moment the PHP function trait in JBJ looks like this:
 
-{% highlight scala %}
+{% highlight scala linenos %}
 trait PFunction {
   def name: NamespaceName
 
@@ -35,37 +35,69 @@ trait PFunction {
 
 Consider one wants to implement the buildin function [strncmp](http://www.php.net/manual/de/function.strncmp.php). It would be quite inconvenient to implement the `PFunction` trait itself, instead one would like to just implement it as regular scala function like this
 
-{% highlight scala %}
+{% highlight scala linenos %}
+object StringFunctions {
   def strncmp(str1: String, str2: String, len: Int): Int = {
     str1.take(len).compareTo(str2.take(len))
   }
+}
 {% endhighlight %}
+
+First we need a generic helper to extract parameters with PHP compatible error handling.
+
+{% highlight scala linenos %}
+trait ParameterAdapter[T] {
+  def adapt(parameters: Iterator[PParam])(implicit ctx: Context): T
+}
+{% endhighlight %}
+
+* `parameters` is the iterator of the parameters that need to be processed. The adapter is supposed to take one or more parameters from the iterator (or throw some error)
+* The result is a tuple of the extracted scala value and a list of remaining parameters to be forwarded to the next `ParameterAdapter`.
 
 Now we need some glue code to convert this function to a `PFunction` usable by the interpreted PHP, which might look like this:
 
-{% highlight scala %}
-  new PFunction {
-    def name = NamespaceName("strncmp")
-    def parameters = Seq(AdaptedParamDef("str1", None, false, None), AdaptedParamDef("str2", None, false, None), AdaptedParamDef("len", None, false, None))
-    def call(parameters: List[PParam])(implicit callerCtx: Context): PAny = {
-      if (parameters.size.$greater(3)) {
-        callerCtx.log.warn(s"strncmp() expects exactly 3 parameters, ${parameters.size} given")
-        return NullVal
-      }
-      val param0 = DefaultParamterAdapter(StringConverter).adapt(parameters, false, {
-        callerCtx.log.warn(s"strncmp() expects exactly 3 parameters, ${parameters.size} given")
-        return NullVal
-      }, (expectedTypeName: String, givenTypeName: String) => ())
-      val param1 = DefaultParamterAdapter.apply(StringConverter).adapt(param0._2, false, {
-        callerCtx.log.warn(s"strncmp() expects exactly 3 parameters, ${parameters.size} given")
-        return NullVal
-      }, (expectedTypeName: String, givenTypeName: String) => ())
-      val param2 = DefaultParamterAdapter.apply(IntConverter).adapt(param1._2, false, {
-        callerCtx.log.warn(s"strncmp() expects exactly 3 parameters, ${parameters.size} given")
-        return NullVal
-      }, (expectedTypeName: String, givenTypeName: String) => ())
-      val result = StringFunctions.strncmp(param0._1, param1._1, param2._1)
-      PValConverter.toJbj(result)(callerCtx)
+{% highlight scala linenos %}
+new PFunction {
+  def name = NamespaceName("strncmp")
+
+  def parameters = Seq(
+    AdaptedParamDef("str1", None, false, None),
+    AdaptedParamDef("str2", None, false, None),
+    AdaptedParamDef("len", None, false, None)
+  )
+
+  private val errorHandlers = ParameterAdapter.errorHandlers("strncmp", ParameterMode.EXACTLY_WARN, 3, 3, false, NullVal)
+
+  private val adapters = (
+    RelaxedParamterAdapter(0, StringConverter, errorHandlers),
+    RelaxedParamterAdapter(1, StringConverter, errorHandlers),
+    RelaxedParamterAdapter(2, IntConverter, errorHandlers)
+  )
+
+  def doCall(parameters: List[PParam])(implicit callerCtx: Context): PAny = {
+    if (parameters.size > 3)
+      errorHandlers.tooManyParameters(parameters.size)
+
+    val parametersIt = parameters.iterator
+    val param1 = adapters._1.adapt(parametersIt)
+    val param2 = adapters._2.adapt(parametersIt)
+    val param3 = adapters._3.adapt(parametersIt)
+    val result = StringFunctions.strncmp(param1, param2, param3)
+    PValConverter.toJbj(result)(callerCtx)
   }
 }
 {% endhighlight %}
+
+Of course it is extremely cumbersome to write all this by hand for each function. I.e. one would like to have a function like this:
+
+{% highlight scala linenos %}
+  def generatePFunctions(instance: Any): Seq[PFunction]
+{% endhighlight %}
+
+* `instance` is the instance/object to be scanned for scala functions, which should be decorated by a `PFunction` as shown above.
+
+The usual Java-approach would be to "generate" this kind of glue-code via reflection and (potentially) AOP. In Scala it is possible to use type-safe marcos for this kind of work.
+
+* [Scala macros: Getting started](scala_macros.html)
+* [Scala macros: Calculator example](scala_macros_calculator.html)
+
