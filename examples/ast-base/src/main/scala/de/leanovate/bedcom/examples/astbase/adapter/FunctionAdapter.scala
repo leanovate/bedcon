@@ -13,11 +13,34 @@ object FunctionAdapter {
     def createFunction(method: MethodSymbol): c.Expr[CalculatorFunction] = {
 
       val nameExpr = c.literal(method.name.encoded)
+
+      if (method.returnType != definitions.IntTpe) {
+        c.abort(method.pos, "Method has to return an Int")
+      }
+      val parameterNames = method.paramss.flatten.map {
+        param =>
+          if (param.typeSignature != definitions.IntTpe) {
+            c.abort(param.pos, "Only Int parameters are supported")
+          }
+          param.name.toTermName
+      }
+
+      val parameterItName = newTermName("parameterIt")
+      val parameterItDecl = ValDef(Modifiers(), parameterItName, TypeTree(),
+                                    Select(Ident(newTermName("parameters")), newTermName("iterator")))
+      val parameterItNext = Apply(Select(Ident(parameterItName), newTermName("next")), Nil)
+      val decls = parameterNames.map {
+        parameterName =>
+          ValDef(Modifiers(), parameterName, TypeTree(), parameterItNext)
+
+      }
+      val call = Apply(Select(Ident(inst.actualType.termSymbol), method.name.toTermName), parameterNames.map(Ident(_)))
+      val callImpl = c.Expr[Int](Block(parameterItDecl :: decls, call))
       reify {
         new CalculatorFunction {
           override def name = nameExpr.splice
 
-          override def call(parameters: Seq[Int]) = ???
+          override def call(parameters: Seq[Int]) = callImpl.splice
         }
       }
     }
