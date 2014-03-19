@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "BED-Com talk"
+title: "BED-Con talk"
 description: ""
 breadcrumb: []
 ---
