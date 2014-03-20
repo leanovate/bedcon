@@ -25,4 +25,5 @@ breadcrumb: []
     * [Scala macros: Calculator example](talk/scala_macros_calculator.html)
 * [Convert PHP code](talk/converter.html)
   * [Very first converted PHP](talk/very_first_converted.html)
+  * [Recent examples](talk/converter_examples.html)
 * [Open issues]()
