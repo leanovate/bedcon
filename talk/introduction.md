@@ -21,8 +21,8 @@ JBJ is not the first project trying to bring PHP to the Java-VM. Most prominentl
 
 * [Quercus](http://quercus.caucho.com/)
   * Almost complete implementation of the PHP interpreter in Java
-  * Part of the Caucho/Resin. Sourcecode available, though not exactly open-source
-  * Runs primarily inside Resin, might be adapted to other Servlet containers as well
+  * Part of the Caucho/Resin. Sourcecode available, GPL license
+  * Does not seem to be community driven
 * [IBM Project Zero/WebSphere sMash](http://en.wikipedia.org/wiki/Project_zero)
   * Almost no information available (any more?)
   * Potentially dead project(?)
