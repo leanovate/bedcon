@@ -78,12 +78,30 @@ Apart from some specialties one might think that these are not so far away from 
                      ---> (int) 15
   ~~~
 
+* Comparison operators depend on the given types, in case of strings even on the content
+
+  ~~~
+  "42" < "10000"
+                     ---> (boolean) true
+  "42a" < "10000"
+                     ---> (boolean) false
+  42 < "10000"
+                     ---> (boolean) true
+  42 < "10000a"
+                     ---> (boolean) true
+  42 < "a10000"
+                     ---> (boolean) false
+  ~~~
+
 * pre/post-increment/decrement behave differently for numbers and strings
 
   ~~~
   $a = 1
   $a++
                     ---> (int) 2
+  $a = 10
+  $a--
+                    ---> (int) 9
   $a = "Hello"
   $a++
                     ---> (string) "Hellp"
@@ -92,7 +110,9 @@ Apart from some specialties one might think that these are not so far away from 
                     ---> (string) "Hello"
   ~~~
 
-## By-Reference function parameters
+## By-Reference
+
+### Function parameters
 
 PHP has a C++ like syntax for passing parameters by reference
 
@@ -105,13 +125,36 @@ function squareIt(&$x) {
 
 $a = 2;
 squareIt($a);
-print "$a\n";
+print "Result: $a\n";
 ?>
 {% endhighlight %}
 
 ~~~
-4
+Result: 4
 ~~~
+
+### Variables
+
+{% highlight php linenos %}
+<?php
+$a = 4;
+$b = array(1, 2, 3, &$a);
+$c = &$a;
+
+echo "1. b[3] = ${b[3]}  a = $a\n";
+$c = 1;
+echo "2. b[3] = ${b[3]}  a = $a\n";
+$b[3] = 8;
+echo "3. c = $c   a = $a\n";
+?>
+{% endhighlight %}
+
+~~~
+1. b[3] = 4  a = 4
+2. b[3] = 1  a = 1
+3. c = 8   a = 8
+~~~
+
 
 ## Classes and interfaces (and traits)
 
