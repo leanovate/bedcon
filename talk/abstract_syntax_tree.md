@@ -32,6 +32,8 @@ trait Expr extends Node { }
 
 case class ExprListExpr(exprs: List[Expr]) extends Expr
 
+case class LiteralExpr(value: Int) extends Expr
+
 case class AddExpr(left: Expr, right: Expr) extends Expr
 
 case class SubExpr(left: Expr, right: Expr) extends Expr 

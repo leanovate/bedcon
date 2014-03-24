@@ -155,7 +155,6 @@ echo "3. c = $c   a = $a\n";
 3. c = 8   a = 8
 ~~~
 
-
 ## Classes and interfaces (and traits)
 
 PHP has a Java like syntax to define classes and interfaces. With PHP 5.4 this has been extended by traits as well.
@@ -189,6 +188,46 @@ constructor
 middle
 destructor
 end
+~~~
+
+## Implicit array and class creation
+
+{% highlight php linenos %}
+<?php
+
+$a[][][] = 3;
+
+var_dump($a);
+
+$b[1][2]->bla = "Hello";
+
+var_dump($b);
+?>
+{% endhighlight %}
+
+~~~
+array(1) {
+  [0] =>
+  array(1) {
+    [0] =>
+    array(1) {
+      [0] =>
+      int(3)
+    }
+  }
+}
+PHP Strict standards:  Creating default object from empty value in t.php on line 7
+
+array(1) {
+  [1] =>
+  array(1) {
+    [2] =>
+    class stdClass#1 (1) {
+      public $bla =>
+      string(5) "Hello"
+    }
+  }
+}
 ~~~
 
 ## Namespaces

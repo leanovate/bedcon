@@ -206,7 +206,7 @@ As one can see the grammar is almost unchanged while there is now support for wh
 
 ~~~
 "42 - 3*3*3*2 + 24/2"                      ---> 0
-""2 * (3 /* blah blah */ +4) / 2 + 7 * 5"" ---> 42
+"2 * (3 /* blah blah */ +4) / 2 + 7 * 5"   ---> 42
 ~~~
 
 From this point on it becomes somewhat straight forward to extends this simple example by several other operators, support for functions or even to a full fledged programming language in itself.
