@@ -23,6 +23,9 @@ JBJ is not the first project trying to bring PHP to the Java-VM. Most prominentl
   * Almost complete implementation of the PHP interpreter in Java
   * Part of the Caucho/Resin. Sourcecode available, GPL license
   * Does not seem to be community driven
+* [JPHP](https://github.com/dim-s/jphp)
+  * PHP compiler for the JVM
+  * Focusses to bring Java-VM features to the PHP language
 * [IBM Project Zero/WebSphere sMash](http://en.wikipedia.org/wiki/Project_zero)
   * Almost no information available (any more?)
   * Potentially dead project(?)
