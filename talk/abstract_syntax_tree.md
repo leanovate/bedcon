@@ -100,6 +100,10 @@ trait Expr extends Node {
 ... and implement it for there concrete nodes, which might be a one-liner in most cases
 
 {% highlight scala linenos %}
+case class LiteralExpr(value: Int) extends Expr {
+  override def eval(implicit context: CalculatorContext) = value
+}
+
 case class AddExpr(left: Expr, right: Expr) extends Expr {
   override def eval(implicit context: CalculatorContext) = left.eval + right.eval
 }
