@@ -108,3 +108,23 @@ table.home-table td a img.aligncenter { margin:10px auto; }
 	#team-gallery .team .team-right { float:left; margin:0; }
 	#team-gallery .team .team-right .team-title { margin:10px 0; }
 }
+
+pre {
+    word-wrap: normal;
+}
+
+.highlight pre, pre {
+    background-color: #F8F8F8;
+    border: 1px solid #DDDDDD;
+    border-radius: 3px;
+    font-size: 13px;
+    line-height: 19px;
+    overflow: auto;
+    padding: 6px 10px;
+    margin: 15px 0;
+}
+
+tt, code, pre {
+    font-family: Consolas,"Liberation Mono",Courier,monospace;
+    font-size: 12px;
+}
