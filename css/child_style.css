@@ -1,0 +1,110 @@
+/*
+Theme Name: Business Pro Child Theme
+Theme URI: http://cyberchimps.com/
+Description: Child Theme for Business Pro
+Author: weblarus
+Author URI: http://www.weblarus.de
+Template: businesspro
+Version: 0.1
+*/
+
+@import url("./style.css");
+
+body { color:#666; }
+
+body,div,p,input,textarea { font-size:14px; }
+
+a { color:#0099CC; }
+a:hover { color:#0099CC; }
+
+h1,h2,h3,h4,h5,h6 { color:#0099CC; font-weight:bold; line-height:25px; }
+h2 { font-size:18px; margin-bottom:10px; }
+
+p { line-height:25px; }
+
+ol,ul { margin-left:30px; }
+ol { list-style:none outside none; list-style-image:url(images/li.png); }
+
+input { padding:2px 4px; }
+select { padding:2px; border:1px solid #CCC; }
+
+.container { padding:0; }
+
+#header .container { background:url(images/header.png) no-repeat scroll 50% 0 transparent; }
+
+#nav #nav_menu > li > a { font-weight:bold; }
+
+#crumbs { margin-bottom:20px; margin-top:20px; border:none; background:none; }
+#crumbs .crumbs_text { padding:0; }
+#crumbs .crumbs_text a { color:#999; }
+#crumbs .crumbs_text a:hover { color:#999; }
+#crumbs .crumbs_text img { margin:0 5px; }
+#crumbs .crumbs_text .current { color:#666; font-weight:bold; }
+
+#content { margin-top:0; }
+#content .featured-image { margin-bottom:10px; }
+#sidebar, #sidebar_left, #sidebar_right { margin-top:0px; }
+
+#callout_text { color:#666; font-size:18px; font-weight:400; padding:20px 0; }
+
+#afterfooter { background:none; color:#999; }
+#afterfooter #afterfooterwrap { padding-bottom:10px; }
+#afterfooter #afterfooterwrap #afterfootercopyright { text-align:left; }
+#afterfooter #afterfooterwrap #afterfootercopyright a { color:#999; }
+#afterfooter #afterfooterwrap #afterfootercopyright a:hover { color:#999; }
+
+#team-gallery { display:block; margin:10px 0; padding:0; }
+#team-gallery .team { display:inline-block; width:100%; margin:10px 0; padding:0; }
+#team-gallery .team .team-left { float:left; width:240px; margin:0 20px 0 0; padding:0; text-align:center; }
+#team-gallery .team .team-left .team-image { width:240px; height:160px; margin:0; padding:0; }
+#team-gallery .team .team-right { margin:0 0 0 260px; padding:0; }
+#team-gallery .team .team-right .team-title { margin:0 0 10px 0; padding:0; }
+#team-gallery .team .team-right .team-title h3 { font-size:16px; }
+#team-gallery .team .team-right .team-caption { margin:0 0 10px 0; padding:0; font-weight:bold; font-style:italic; }
+#team-gallery .team .team-right .team-description { margin:0; padding:0; }
+#team-gallery .team .team-right .team-description .item-trigger { margin:0 0 10px 0; padding:0; }
+#team-gallery .team .team-right .team-description .item-toggle { display:none; margin:0; padding:0; }
+
+.textwidget { padding:0; }
+
+ul.event-categories { margin:0; padding:0; list-style-type:square; }
+ul.event-categories li { margin:5px; padding:0; }
+
+ul.event-locations { margin:0; padding:0; list-style-type:square; }
+ul.event-locations li { margin:5px; padding:0; }
+
+table.events-table { width:100%; margin-bottom:20px; font-size:13px; text-align:left; }
+table.events-table th { padding:5px 0; font-weight:bold; }
+table.events-table td { padding:5px 0; }
+table.events-table td p { margin:0; padding:0; font-size:13px; }
+table.events-table td ul.event-categories { margin:0; padding:0; list-style-type:none; }
+table.events-table td ul.event-categories li { display:inline-block; margin:0; padding:0; line-height: 25px; }
+
+table.em-tickets { width:100%; margin-bottom:20px; font-size:14px; text-align:left; }
+table.em-tickets th { padding:5px 0; font-weight:bold; }
+table.em-tickets td { padding:5px 0; }
+table.em-tickets td p { margin:0; padding:0; font-size:14px; }
+table.em-tickets td select { width:60px; margin:0; }
+
+.em-booking-form .em-booking-form-details { width:500px !important; margin:0 0 20px 0 !important; padding:0 !important; }
+.em-booking-form .em-booking-form-details label { width:500px !important; margin:3px 0 !important;  font-size:14px;}
+.em-booking-form .em-booking-form-details input { width:500px !important; }
+.em-booking-form .em-booking-form-details select { width:510px !important; margin:0 !important; }
+.em-booking-form .em-booking-form-details textarea { width:500px!important; height:100px !important; margin:0 !important; padding:2px 4px !important; }
+.em-booking-form .em-booking-form-details .em-booking-submit { width:auto !important; margin:10px 0 !important; padding:5px 10px !important; }
+
+.event-location-map { margin:0 0 20px 0; padding:0; }
+
+.widget-container ul.event-categories { margin:0; padding:0; font-size:13px; }
+.widget-container ul.event-categories li { margin:0; padding:0; }
+
+table.home-table { width:100%; margin:20px 0 10px 0; padding:0; }
+table.home-table td { margin:0; padding:10px; }
+table.home-table td h2 { margin:0; }
+table.home-table td a img.aligncenter { margin:10px auto; }
+
+@media handheld, only screen and (max-width: 767px) {
+
+	#team-gallery .team .team-right { float:left; margin:0; }
+	#team-gallery .team .team-right .team-title { margin:10px 0; }
+}
