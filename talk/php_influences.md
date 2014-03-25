@@ -3,6 +3,7 @@ layout: page
 title: "The many influences of PHP"
 description: ""
 breadcrumb: [index.md, talk/breakdown.md]
+root: ..
 ---
 
 # The mean features

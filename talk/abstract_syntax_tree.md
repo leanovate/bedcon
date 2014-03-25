@@ -3,6 +3,7 @@ layout: page
 title: "Abstract syntax tree"
 description: ""
 breadcrumb: [index.md]
+root: ..
 ---
 
 # What's an abstract syntax tree

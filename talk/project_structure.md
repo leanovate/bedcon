@@ -3,6 +3,7 @@ layout: page
 title: "General project structure"
 description: ""
 breadcrumb: [index.md, talk/breakdown.md]
+root: ..
 ---
 
 ![Project structure](project_structure.png)

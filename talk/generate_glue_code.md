@@ -3,6 +3,7 @@ layout: page
 title: "Generate glue code using Scala macros"
 description: ""
 breadcrumb: [index.md, talk/runtime_library.md]
+root: ..
 ---
 
 # The problem

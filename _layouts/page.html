@@ -5,7 +5,7 @@ layout: default
     {% for path in page.breadcrumb %}
         {% for otherpage in site.pages %}
             {% if otherpage.path == path %}
-            <li><a href="{{otherpage.url}}">{{otherpage.title}}</a></li>
+            <li><a href="{{ page.root}}{{otherpage.url}}">{{otherpage.title}}</a></li>
             {% endif %}
         {% endfor %}
     {% endfor %}

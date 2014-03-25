@@ -3,6 +3,7 @@ layout: page
 title: "Java parser generators"
 description: ""
 breadcrumb: [index.md, talk/parser.md]
+root: ..
 ---
 
 * [JavaCC](https://javacc.java.net/)

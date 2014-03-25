@@ -3,6 +3,7 @@ layout: page
 title: "Breakdown of the problem"
 description: ""
 breadcrumb: [index.md]
+root: ..
 ---
 
 Primary goals of the project

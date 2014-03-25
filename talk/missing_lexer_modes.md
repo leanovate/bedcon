@@ -3,6 +3,7 @@ layout: page
 title: "Missing lexer modes"
 description: ""
 breadcrumb: [index.md, talk/parser.md, talk/scala_combinators.md]
+root: ..
 ---
 
 As discussed in the previous section the scala combinator framework is quite powerful and already offers a generic support for lexical anaylzers. Unluckily this does not suffice for PHP, since there is no support for lexer modes.

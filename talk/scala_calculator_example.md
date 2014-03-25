@@ -3,6 +3,7 @@ layout: page
 title: "Simple calculator example"
 description: ""
 breadcrumb: [index.md, talk/parser.md, talk/scala_combinators.md]
+root: ..
 ---
 
 # Very first step: Simple addition/substraction

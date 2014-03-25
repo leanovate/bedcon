@@ -3,6 +3,7 @@ layout: page
 title: "BED-Con talk"
 description: ""
 breadcrumb: []
+root: .
 ---
 
 # Topics

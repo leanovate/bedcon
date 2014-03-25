@@ -3,6 +3,7 @@ layout: page
 title: "Scala combinators"
 description: ""
 breadcrumb: [index.md, talk/parser.md]
+root: ..
 ---
 
 Scala combinators are part of the scala-library (scala.util.parsing.combinator) and offer a new way to write lexical analyzers and parsers. In contrast to to the classic approach a lexer is supposed to be just another kind of parser that can be written with the same tool set as the parser itself.

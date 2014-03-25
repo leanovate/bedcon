@@ -3,6 +3,7 @@ layout: page
 title: "Comparison: flex/bison vs Scala combinators"
 description: ""
 breadcrumb: [index.md, talk/parser.md]
+root: ..
 ---
 
 # Lexer side-by-side

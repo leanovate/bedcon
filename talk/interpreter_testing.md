@@ -3,6 +3,7 @@ layout: page
 title: "Testing the interpreter"
 description: ""
 breadcrumb: [index.md, talk/abstract_syntax_tree.md]
+root: ..
 ---
 
 # Use the existing testsuite of the PHP interpreter itself

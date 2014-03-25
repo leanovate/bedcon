@@ -3,6 +3,7 @@ layout: page
 title: "Short overview over classic lexers/parsers"
 description: ""
 breadcrumb: [index.md, talk/parser.md]
+root: ..
 ---
 
 # What's a lexical analyzer aka scanner aka lexer

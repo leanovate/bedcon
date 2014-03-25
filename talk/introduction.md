@@ -3,6 +3,7 @@ layout: page
 title: "Introduction"
 description: ""
 breadcrumb: [index.md]
+root: ..
 ---
 
 # Name of the game

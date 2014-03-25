@@ -3,6 +3,7 @@ layout: page
 title: "The Parser"
 description: ""
 breadcrumb: [index.md]
+root: ..
 ---
 
 * [Short overview over classic lexers/parsers](classic_parsers.html)
