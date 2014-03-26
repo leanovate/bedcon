@@ -5,10 +5,13 @@ import scala.reflect.macros.Context
 import scala.language.experimental.macros
 
 object FunctionAdapter {
-  def generateCalculatorFunctions[T](inst: T): Seq[CalculatorFunction] = macro generateCalculatorFunctions_impl[T]
+  def generateCalculatorFunctions[T]: Seq[CalculatorFunction] = macro generateCalculatorFunctions_impl[T]
 
-  def generateCalculatorFunctions_impl[T](c: Context)(inst: c.Expr[T]): c.Expr[Seq[CalculatorFunction]] = {
+  def generateCalculatorFunctions_impl[T: c.WeakTypeTag](c: Context): c.Expr[Seq[CalculatorFunction]] = {
     import c.universe._
+
+    val companioned = weakTypeOf[T].typeSymbol
+    val companionSymbol = companioned.companionSymbol
 
     def createFunction(method: MethodSymbol): c.Expr[CalculatorFunction] = {
 
@@ -34,7 +37,8 @@ object FunctionAdapter {
           ValDef(Modifiers(), parameterName, TypeTree(), parameterItNext)
 
       }
-      val call = Apply(Select(Ident(inst.actualType.termSymbol), method.name.toTermName), parameterNames.map(Ident(_)))
+
+      val call = Apply(Select(Ident(companionSymbol), method.name.toTermName), parameterNames.map(Ident(_)))
       val callImpl = c.Expr[Int](Block(parameterItDecl :: decls, call))
       reify {
         new CalculatorFunction {
@@ -45,7 +49,8 @@ object FunctionAdapter {
       }
     }
 
-    val funcs = inst.actualType.members.filter {
+
+    val funcs = companioned.typeSignature.members.filter {
       member =>
         member.isMethod && member.annotations.exists(_.tpe == typeOf[AdaptedFunction])
     }.map {

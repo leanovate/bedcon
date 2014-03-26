@@ -8,6 +8,6 @@ trait BuildinFunctions {
 }
 
 object BuildinFunctions extends BuildinFunctions {
-  val calculatorFunctions = FunctionAdapter.generateCalculatorFunctions(this)
+  val calculatorFunctions = FunctionAdapter.generateCalculatorFunctions[BuildinFunctions]
 }
 
