@@ -54,9 +54,9 @@ object ASTParser extends StdTokenParsers {
 case class AdaptedFunction() extends StaticAnnotation
 
 object FunctionAdapter {
-  def generateCalculatorFunctions(inst: Any): Seq[CalculatorFunction] = macro generateCalculatorFunctions_impl
+  def generateCalculatorFunctions[T]: Seq[CalculatorFunction] = macro generateCalculatorFunctions_impl[T]
 
-  def generateCalculatorFunctions_impl(c: Context)(inst: c.Expr[Any]): c.Expr[Seq[CalculatorFunction]] = {
+  def generateCalculatorFunctions_impl[T: c.WeakTypeTag](c: Context): c.Expr[Seq[CalculatorFunction]] = {
     import c.universe._
 
     reify {
@@ -66,13 +66,13 @@ object FunctionAdapter {
 }
 {% endhighlight %}
 
-# Step 2: Try to figure out how to fill a `Seq` dynamically
+# Step 2: Try to figure out how to fill a Seq dynamically
 
 {% highlight scala linenos %}
 object FunctionAdapter {
-  def generateCalculatorFunctions[T](inst: T): Seq[CalculatorFunction] = macro generateCalculatorFunctions_impl[T]
+  def generateCalculatorFunctions[T]: Seq[CalculatorFunction] = macro generateCalculatorFunctions_impl[T]
 
-  def generateCalculatorFunctions_impl[T](c: Context)(inst: c.Expr[T]): c.Expr[Seq[CalculatorFunction]] = {
+  def generateCalculatorFunctions_impl[T: c.WeakTypeTag](c: Context): c.Expr[Seq[CalculatorFunction]] = {
     import c.universe._
 
     def createFunction(): c.Expr[CalculatorFunction] = {
@@ -125,9 +125,9 @@ Apply(Select(Ident(scala.collection.Seq), newTermName("apply")), List(Block(List
 
 {% highlight scala linenos %}
 object FunctionAdapter {
-  def generateCalculatorFunctions[T](inst: T): Seq[CalculatorFunction] = macro generateCalculatorFunctions_impl[T]
+  def generateCalculatorFunctions[T]: Seq[CalculatorFunction] = macro generateCalculatorFunctions_impl[T]
 
-  def generateCalculatorFunctions_impl[T](c: Context)(inst: c.Expr[T]): c.Expr[Seq[CalculatorFunction]] = {
+  def generateCalculatorFunctions_impl[T: c.WeakTypeTag](c: Context): c.Expr[Seq[CalculatorFunction]] = {
     import c.universe._
 
     def createFunction(): c.Expr[CalculatorFunction] = {
@@ -149,10 +149,13 @@ object FunctionAdapter {
 
 {% highlight scala linenos %}
 object FunctionAdapter {
-  def generateCalculatorFunctions[T](inst: T): Seq[CalculatorFunction] = macro generateCalculatorFunctions_impl[T]
+  def generateCalculatorFunctions[T]: Seq[CalculatorFunction] = macro generateCalculatorFunctions_impl[T]
 
-  def generateCalculatorFunctions_impl[T](c: Context)(inst: c.Expr[T]): c.Expr[Seq[CalculatorFunction]] = {
+  def generateCalculatorFunctions_impl[T: c.WeakTypeTag](c: Context): c.Expr[Seq[CalculatorFunction]] = {
     import c.universe._
+
+    val companioned = weakTypeOf[T].typeSymbol
+    val companionSymbol = companioned.companionSymbol
 
     def createFunction(method: MethodSymbol): c.Expr[CalculatorFunction] = {
 
@@ -166,7 +169,7 @@ object FunctionAdapter {
       }
     }
 
-    val funcs = inst.actualType.members.filter {
+    val funcs = companioned.typeSignature.members.filter {
       member =>
         member.isMethod && member.annotations.exists(_.tpe == typeOf[AdaptedFunction])
     }.map {
@@ -207,9 +210,6 @@ object FunctionAdapter {
 {% endhighlight %}
 
 {% highlight scala linenos %}
-  def generateCalculatorFunctions_impl[T](c: Context)(inst: c.Expr[T]): c.Expr[Seq[CalculatorFunction]] = {
-    import c.universe._
-
     def createFunction(method: MethodSymbol): c.Expr[CalculatorFunction] = {
 
       val nameExpr = c.literal(method.name.encoded)
@@ -227,14 +227,15 @@ object FunctionAdapter {
 
       val parameterItName = newTermName("parameterIt")
       val parameterItDecl = ValDef(Modifiers(), parameterItName, TypeTree(),
-                                    Apply(Select(Ident(newTermName("parameters")), newTermName("iterator")), Nil))
+                                    Select(Ident(newTermName("parameters")), newTermName("iterator")))
       val parameterItNext = Apply(Select(Ident(parameterItName), newTermName("next")), Nil)
       val decls = parameterNames.map {
         parameterName =>
           ValDef(Modifiers(), parameterName, TypeTree(), parameterItNext)
 
       }
-      val call = Apply(Select(Ident(inst.actualType.termSymbol), method.name.toTermName), parameterNames.map(Ident(_)))
+
+      val call = Apply(Select(Ident(companionSymbol), method.name.toTermName), parameterNames.map(Ident(_)))
       val callImpl = c.Expr[Int](Block(parameterItDecl :: decls, call))
       reify {
         new CalculatorFunction {
