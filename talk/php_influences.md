@@ -37,79 +37,79 @@ The PHP language has the following primitive types
 
 Apart from some specialties one might think that these are not so far away from the basic types of Java/Scala. Though the main problem one quickly encounters are the implicit type conversion that are quite similar to Perl.
 
-* String concatenation (dot operator like in Perl) implicitly assumes that both operants are strings
+### String concatenation (dot operator like in Perl) implicitly assumes that both operants are strings
 
-  ~~~
-  "Hello " . "42"
-                     ---> (string) "Hello 42"
-  "Hello " . 42
-                     ---> (string) "Hello 42"
-  ~~~
+~~~
+"Hello " . "42"
+                   ---> (string) "Hello 42"
+"Hello " . 42
+                   ---> (string) "Hello 42"
+~~~
 
-* Arithmetic operators implicitly assume that both operants are numbers (integer of floating point)
+### Arithmetic operators implicitly assume that both operants are numbers (integer of floating point)
 
-  ~~~
-  "Hello " + "42"
-                     ---> (int) 42
-  " 1e5 " + 42
-                     ---> (double) 100042
-  ~~~
+~~~
+"Hello " + "42"
+                   ---> (int) 42
+" 1e5 " + 42
+                   ---> (double) 100042
+~~~
 
-* Logical operators implicitly assume that both operants are booleans
+### Logical operators implicitly assume that both operants are booleans
 
-  ~~~
-  "Hello " && true
-                     ---> (boolean) true
-  "false" && true
-                     ---> (boolean) true
-  "" && true
-                     ---> (boolean) false
-  0 && true
-                     ---> (boolean) false
-  ~~~
+~~~
+"Hello " && true
+                   ---> (boolean) true
+"false" && true
+                   ---> (boolean) true
+"" && true
+                   ---> (boolean) false
+0 && true
+                   ---> (boolean) false
+~~~
 
-* Bitwise operators behave differently for numbers and string
+### Bitwise operators behave differently for numbers and string
 
-  ~~~
-  "Hello" | "abcde"
-                     ---> (string) "igolo"
-  "Hello" | 10
-                     ---> (int) 10
-  "13" | 10
-                     ---> (int) 15
-  ~~~
+~~~
+"Hello" | "abcde"
+                   ---> (string) "igolo"
+"Hello" | 10
+                   ---> (int) 10
+"13" | 10
+                   ---> (int) 15
+~~~
 
-* Comparison operators depend on the given types, in case of strings even on the content
+### Comparison operators depend on the given types, in case of strings even on the content
 
-  ~~~
-  "42" < "10000"
-                     ---> (boolean) true
-  "42a" < "10000"
-                     ---> (boolean) false
-  42 < "10000"
-                     ---> (boolean) true
-  42 < "10000a"
-                     ---> (boolean) true
-  42 < "a10000"
-                     ---> (boolean) false
-  ~~~
+~~~
+"42" < "10000"
+                   ---> (boolean) true
+"42a" < "10000"
+                   ---> (boolean) false
+42 < "10000"
+                   ---> (boolean) true
+42 < "10000a"
+                   ---> (boolean) true
+42 < "a10000"
+                   ---> (boolean) false
+~~~
 
-* pre/post-increment/decrement behave differently for numbers and strings
+### pre/post-increment/decrement behave differently for numbers and strings
 
-  ~~~
-  $a = 1
-  $a++
-                    ---> (int) 2
-  $a = 10
-  $a--
-                    ---> (int) 9
-  $a = "Hello"
-  $a++
-                    ---> (string) "Hellp"
-  $a = "Hello"
-  $a--
-                    ---> (string) "Hello"
-  ~~~
+~~~
+$a = 1
+$a++
+                  ---> (int) 2
+$a = 10
+$a--
+                  ---> (int) 9
+$a = "Hello"
+$a++
+                  ---> (string) "Hellp"
+$a = "Hello"
+$a--
+                  ---> (string) "Hello"
+~~~
 
 ## By-Reference
 
@@ -275,6 +275,35 @@ $func("Hello");
 Hello
 ~~~
 
+{% highlight php linenos %}
+<?php
+$result = 0;
+
+$one = function()
+{ var_dump($result); };
+
+$two = function() use ($result)
+{ var_dump($result); };
+
+$three = function() use (&$result)
+{ var_dump($result); };
+
+$result++;
+
+$one();
+$two();
+$three();
+?>
+{% endhighlight %}
+
+~~~
+PHP Notice:  Undefined variable: result in - on line 5
+
+NULL
+int(0)
+int(1)
+~~~
+
 ## Generators
 
 As of PHP 5.5 there is a python like support for generators.
@@ -349,7 +378,7 @@ $obj = new A();
 
 will be compiled to
 
-{:class="table table-condensed table-bordered"}
+{:class="events-table"}
 |-----------------------------------------------------------|
 | line | op               | fetch | ext | return | operants |
 |-----------------------------------------------------------|
