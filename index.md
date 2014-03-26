@@ -6,6 +6,14 @@ breadcrumb: []
 root: .
 ---
 
+# Slides
+
+The slides of the talk can be downloaded [here](JBJ - BED-Con.pdf)
+
+# Source code
+
+The source code of the examples can be found [here](https://github.com/leanovate/bedcon)
+
 # Topics
 
 * [Introduction](talk/introduction.html)
