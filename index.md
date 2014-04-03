@@ -6,6 +6,10 @@ breadcrumb: []
 root: .
 ---
 
+# What is this?
+
+These are some companion pages (and examples) for my talk at the [BED-Con 2014](http://bed-con.org) focusing on the [JBJ project](https://github.com/leanovate/jbj).
+
 # Slides
 
 The slides of the talk can be downloaded [here](JBJ - BED-Con.pdf)
